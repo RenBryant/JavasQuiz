@@ -30,6 +30,6 @@ header {
   background-color: #1A9434;
 }
 
-.float-right {
-  float: right;
+.hide {
+  display: none;
 }

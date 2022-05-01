@@ -11,11 +11,24 @@
     <header>
         Minecraft Quiz
     </header>
-    
+    <div id='questions'>
+        <div id="timer"></div>
+        <div id="quizQuestion"></div>
+        <div id="answers"></div>
+        <button id="start" class="btn">start</button>
+    </div>
+    <!-- <button id="nextQuestion" class="btn">Next Question</button> -->
+
+    <div id="end-screen" class="hide">
+        <h2>All done!</h2>
+        <p>Your final score is <span id="final-score"></span>.</p>
+        <p>
+            Enter initials: <input type="text" id="initials" max="3" />
+            <button id="submit">Submit</button>
+        </p>
+    </div>
+
+    <script src="./assets/script.js"></script>
 </body>
-<div>
-    <script src="./assets/Script.js"></script>
-    <button id="nextQuestion" class="btn">Next Question</button>
-    <button id="Submit" class="btn">Submit</button>
-</div>
+
 </html>
