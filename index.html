@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./assets/stylesheet.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Links to Stlying-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/stylesheet.css" />
+   
+    <!--Title-->
     <title>Quiz on MineCraft</title>
 </head>
 
+<!--Quiz Section-->
 <body>
     <header>
-        <h1>Minecraft Quiz</h1>
+        <div class="container hide-top">
+            <button class="btn btn-warning" id="btn">View High Scores</button>
+            <p class="timer" id="timer">Time:</p>
+        </div>
+        <h1 id="title">Minecraft Quiz</h1>
     </header>
     <div id='questions'>
         <div id="timer"></div>
         <div id="quizQuestion"></div>
         <div id="answers"></div>
-        <button id="start" class="btn">start</button>
+        <button class="btn btn-success" id="start"class="btn">Start</button>
+        <p id="content">
+            Answer each question in a timely manner. Every wrong answer will remove time
+            from the countdown, remember that the time left will be your score points!
+        </p>
     </div>
-    <!-- <button id="nextQuestion" class="btn">Next Question</button> -->
 
+    <!--Finished Quiz Section-->
     <div id="end-screen" class="hide">
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
@@ -26,6 +41,19 @@
             Enter initials: <input type="text" id="initials" max="3" />
             <button id="submit">Submit</button>
         </p>
+    </div>
+
+    <!--HighScores section-->
+    <div class="center__content hide">
+        <h2 class="scoresTitle">High Scores</h2>
+        <ol id="listScores">
+
+        </ol>
+        
+        <div class="backclear__container">
+            <button class="restart-btn btn btn-primary" id="restart-btn">Restart the Quiz?</button>
+            <button class="clear-btn btn btn-danger" id="clear-btn">Clear High Scores</button>
+        </div>
     </div>
 
     <script src="./assets/script.js"></script>

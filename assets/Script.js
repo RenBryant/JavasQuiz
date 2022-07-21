@@ -3,7 +3,9 @@ const startButton = document.getElementById('start');
 const quizQuestion = document.getElementById('quizQuestion');
 const timer = document.getElementById('timer')
 const answers = document.getElementById('answers')
-{/* <><text>Time: <text id="time00">300</text></text><br /></> */}
+const scoresList = document.getElementById('scoresList')
+const initials = document.getElementById('initials')
+const clearScores = document.getElementById('clear')
 
 var timeId;
 
@@ -21,23 +23,6 @@ function quizEnd(){
     var questions = document.getElementById('questions')
     questions.setAttribute('class', 'hide')
 }
-
-function saveScore(){
-    var initials = document.getElementById('initials').value.trim()
-
-    var highscores = JSON.parse(window.localstorage.getItem('highscores')) || [];
-
-    var newScore = {
-        score : time,
-        intitals: initials
-    }
-    //highscores.push(newScore)
-    //look up localstorage.setItem('','') expects two paramaters, first being the key, the second being the value
-    //once you have saved to local storage then do a window.location change to the highscores page
-    
-}
-
-
 
 function buildQuiz(){
     timer.textContent = time;
@@ -67,13 +52,7 @@ function answerClick(){
         time = time -15
         timer.textContent = time
     }
-
-   // else {
         questionIndex ++
-
-    //}
-
-    //arr = [1,2,3]  arr[arr.length - 1]
     
     if(questionIndex === myQuestions.length){
         quizEnd()
@@ -81,19 +60,19 @@ function answerClick(){
         showQuestion()
     }
 
-    //check for the user's answer 
-        //if(this.value !== myQuestions[0].answer)
-    //if the user's answer is wrong, subtract time
-    //if the user's answer is correct, display next question (remember the questionIndex)
-    //if at end of question list, call for end of quiz
 }
+
 
 function showResults(){
     buildQuiz();
     submitButton.addEventListener('click', showResults);
+    const initialsValue = initials.value;
+    let score = JSON.parse(localStorage.getItem("codeQuiz")) ||[]
+    score.push({user: initials, score: timerCounter})
+
+    localStorage.setItem ('codeQuiz'. JSON.stringify(score))
     
 }
-// something.createElement('button')
 
 const myQuestions = [
     {
@@ -113,11 +92,43 @@ const myQuestions = [
      },
      {
          question: "How many logs are needed to craft a crafting table?",
-         answers: ["trick question 4 planks not logs","4 logs","2 logs"],
-         correctAnswer: "trick question 4 planks not logs"
+         answers: ["4 planks not logs","4 logs","2 logs"],
+         correctAnswer: "4 planks not logs"
      },
+     {
+        question: "Who is the #1 Potato Farmer in Skyblock?",
+        answers: ["Dream", "Technoblade", "Squid"],
+        correctAnswer: "Technoblade"
+     }
 
 ]
+
+function highScores() {
+ 
+    let score = JSON.parse(localStorage.getItem("codeQuiz")) ||[]
+    for (let i = 0; i < score.length; i++) {
+        for(let j=0; j <score.length; j++) {
+         if(score[i].score > score[j].score){
+             let temp = score[j]
+             score[j] = score[i]
+             score[i] = temp
+         }
+        }
+    }
+
+listScores.innerHTML = '';
+for (let i = 0; i < userScore.length; i++)  {
+    let li = document.createElement('li')
+    let text = document.createTextNode(`${score[i].user} - ${score[i].score}`)
+    li.appendChild(text)
+    listScores.appendChild(li)
+}
+
+
+function clearScores() {
+localStorage.removeItem ('codeQuiz')
+scoresList.innerHTML = '';
+}
 
 function restart(){
     window.location.reload();
@@ -134,7 +145,7 @@ function TimeDown() {
         alert('Time is up! Press ok to restart the quiz.')
     }
 }
-
+}
 
 
 startButton.addEventListener('click', buildQuiz)
