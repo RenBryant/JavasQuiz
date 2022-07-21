@@ -3,9 +3,10 @@ const startButton = document.getElementById('start');
 const quizQuestion = document.getElementById('quizQuestion');
 const timer = document.getElementById('timer')
 const answers = document.getElementById('answers')
-const scoresList = document.getElementById('scoresList')
-const initials = document.getElementById('initials')
-const clearScores = document.getElementById('clear')
+const correctAnswer = document.getElementById ('correct')
+const wrongAnswer = document.getElementById ('wrong')
+
+let counter = 0;
 
 var timeId;
 
@@ -23,6 +24,19 @@ function quizEnd(){
     var questions = document.getElementById('questions')
     questions.setAttribute('class', 'hide')
 }
+
+function saveScore(){
+    var initials = document.getElementById('initials').value.trim()
+
+    var highscores = JSON.parse(window.localstorage.getItem('highscores')) || [];
+
+    var newScore = {
+        score : time,
+        intitals: initials
+    }
+}
+
+
 
 function buildQuiz(){
     timer.textContent = time;
@@ -52,6 +66,7 @@ function answerClick(){
         time = time -15
         timer.textContent = time
     }
+
         questionIndex ++
     
     if(questionIndex === myQuestions.length){
@@ -62,17 +77,12 @@ function answerClick(){
 
 }
 
-
 function showResults(){
     buildQuiz();
     submitButton.addEventListener('click', showResults);
-    const initialsValue = initials.value;
-    let score = JSON.parse(localStorage.getItem("codeQuiz")) ||[]
-    score.push({user: initials, score: timerCounter})
-
-    localStorage.setItem ('codeQuiz'. JSON.stringify(score))
     
 }
+
 
 const myQuestions = [
     {
@@ -92,42 +102,24 @@ const myQuestions = [
      },
      {
          question: "How many logs are needed to craft a crafting table?",
-         answers: ["4 planks not logs","4 logs","2 logs"],
-         correctAnswer: "4 planks not logs"
+         answers: ["trick question 4 planks not logs","4 logs","2 logs"],
+         correctAnswer: "trick question 4 planks not logs"
      },
-     {
-        question: "Who is the #1 Potato Farmer in Skyblock?",
-        answers: ["Dream", "Technoblade", "Squid"],
-        correctAnswer: "Technoblade"
-     }
 
 ]
 
-function highScores() {
- 
-    let score = JSON.parse(localStorage.getItem("codeQuiz")) ||[]
-    for (let i = 0; i < score.length; i++) {
-        for(let j=0; j <score.length; j++) {
-         if(score[i].score > score[j].score){
-             let temp = score[j]
-             score[j] = score[i]
-             score[i] = temp
-         }
-        }
-    }
+function rightOrWrong() {
+    correctAnswer.classList.add('hide');
+    wrongAnswer.classList.add('hide');
 
-listScores.innerHTML = '';
-for (let i = 0; i < userScore.length; i++)  {
-    let li = document.createElement('li')
-    let text = document.createTextNode(`${score[i].user} - ${score[i].score}`)
-    li.appendChild(text)
-    listScores.appendChild(li)
-}
+    const currentQuestion = quizQuestions[counter];
 
+    if (!currentQuestion) return;
 
-function clearScores() {
-localStorage.removeItem ('codeQuiz')
-scoresList.innerHTML = '';
+    quizQuestion.textContent = currentQuestion.question;
+    counter++;
+
+    return currentQuestion;
 }
 
 function restart(){
@@ -145,7 +137,7 @@ function TimeDown() {
         alert('Time is up! Press ok to restart the quiz.')
     }
 }
-}
+
 
 
 startButton.addEventListener('click', buildQuiz)

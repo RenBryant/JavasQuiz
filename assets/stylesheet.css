@@ -69,13 +69,24 @@ header {
   display: none;
 }
 
-#quizQuestion, #answers{
+#quizQuestion{
   font-size: large;
   text-align: center;
   font-weight: bold;
 }
 
-#answers:hover {
-  color:blue;
-  border: darkred;
+#answers{
+  font-size: large;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.correct,
+.wrong {
+    font-style: italic;
+    margin-top: 30px;
+    color: red;
 }
